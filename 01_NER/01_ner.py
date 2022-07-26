@@ -2,6 +2,7 @@ import spacy
 from spacy.tokens import Span
 from spacy.matcher import PhraseMatcher
 from spacy.tokens import Span
+from spacy import displacy
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -49,3 +50,15 @@ show_ents(doc_4)
 doc_5 = nlp("Originally I paid $29.95 for this car toy, but not it is marked down by 10 dollars.")
 [ent for ent in doc_5.ents if ent.label_ == "MONEY"]
 len([ent for ent in doc_5.ents if ent.label_ == "MONEY"])
+
+# Display NER results:
+doc_6 = nlp("Over the last quarter Apple sold nearly 20 thousand iPods for a profit of $6 million."
+            "By contrast, Sony only sold 8 thousand Walkman music players.")
+for sent in doc_6.sents:
+    displacy.render(sent, style="ent", jupyter=True)
+
+colors = {"ORG": "red", "PRODUCT": "lightblue"}
+options ={"ents": ["PRODUCT", "ORG"], "colors": colors}
+for sent in doc_6.sents:
+    displacy.render(sent, style="ent", jupyter=True, options=options)
+
