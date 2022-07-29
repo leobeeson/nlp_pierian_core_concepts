@@ -19,7 +19,6 @@ df["label"].value_counts()
 
 
 # See text length distribution:
-%matplotlib inline
 pyplot.xscale("log")
 bins = 1.15**(numpy.arange(0,50))
 pyplot.hist(df[df["label"] == "ham"]["length"], bins=bins, alpha=0.8)
