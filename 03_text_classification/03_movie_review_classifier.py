@@ -44,3 +44,44 @@ print(confusion_matrix(y_test, predictions))
 print(classification_report(y_test, predictions))
 accuracy_score(y_test, predictions)
 
+
+# Assessment exercise:
+## Read in corpus:
+df = pandas.read_csv("../data/TextFiles/moviereviews2.tsv", sep="\t")
+df.head()
+len(df)
+
+## Drop NA values:
+df.isnull().sum()
+df.isna().sum()
+df.dropna(inplace=True)
+df.isnull().sum()
+
+blanks_idx = []
+for idx, label, review in df.itertuples():
+    if review.isspace():
+        blanks_idx.append(idx)
+df.drop(blanks_idx, inplace=True)
+df.shape
+
+# Explore labels:
+df["label"].describe()
+
+# Split corpus:
+X = df["review"]
+y = df["label"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+
+# Build and train model:
+model = Pipeline([
+    ("tfidf", TfidfVectorizer()),
+    ("svc", LinearSVC())
+])
+model.fit(X_train, y_train)
+
+# Make predictions:
+predictions = model.predict(X_test)
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
+accuracy_score(y_test, predictions)
+
