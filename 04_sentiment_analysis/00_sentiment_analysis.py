@@ -1,4 +1,3 @@
-from random import sample
 import nltk
 # nltk.download("vader_lexicon") # Only needs to be done once.
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
